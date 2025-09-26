@@ -4,6 +4,8 @@ import ch.qos.logback.core.pattern.SpacePadder;
 import com.example.projeto_many_to_many.models.Curso;
 import com.example.projeto_many_to_many.repositories.CursoRepository;
 import com.example.projeto_many_to_many.specifications.CursoSpecification;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,7 @@ public class CursoService {
         this.cursoRepository = cursoRepository;
     }
 
-    public List<Curso> filtrarCursos(String nome, String categoria, Integer cargaMin, String status){
+    public Page<Curso> filtrarCursos(String nome, String categoria, Integer cargaMin, String status, Pageable page){
 
 //      Specification<Curso> spec2 = (root, query, cb) -> cb.conjunction();
 
@@ -28,7 +30,9 @@ public class CursoService {
                 .and(CursoSpecification.comCargaHorariaMin(cargaMin))
                 .and(CursoSpecification.comStatus(status));
 
-        return cursoRepository.findAll(spec);
+        Page<Curso> cursos = cursoRepository.findAll(spec, page);
+
+        return cursos;
     }
 
     public Curso salar(Curso curso){

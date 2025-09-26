@@ -2,6 +2,8 @@ package com.example.projeto_many_to_many.controllers;
 
 import com.example.projeto_many_to_many.models.Curso;
 import com.example.projeto_many_to_many.services.CursoService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,13 +18,14 @@ public class CursoController {
     }
 
     @GetMapping
-    public List<Curso> getAll(
+    public Page<Curso> getAll(
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) String categoria,
             @RequestParam(required = false) Integer cargaMin,
-            @RequestParam(required = false) String status
+            @RequestParam(required = false) String status,
+            Pageable pageable
     ){
-        return cursoService.filtrarCursos(nome, categoria, cargaMin, status);
+        return cursoService.filtrarCursos(nome, categoria, cargaMin, status, pageable);
     }
 
     @PostMapping
