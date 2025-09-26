@@ -3,6 +3,7 @@ package com.example.projeto_many_to_many.controllers;
 import com.example.projeto_many_to_many.models.Aluno;
 import com.example.projeto_many_to_many.services.AlunoService;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +33,7 @@ public class AlunoController {
         return alunoService.buscarAlunosAprovados();
     }
 
+    @Hidden //esconde o endpoint no swagger
     @GetMapping("/cidade/{cidade}")
     public List<Aluno> getAlunosByCidade(@PathVariable String cidade){
         return alunoService.buscarAlunoPorCidade(cidade);
